@@ -1,1 +1,1 @@
-include ':app', ':places-view', ':http-comms', ':reflect', ':database'
+include ':app', ':places-view', ':http-comms', ':reflect', ':database', ':inject'

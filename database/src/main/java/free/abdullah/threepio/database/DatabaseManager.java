@@ -43,6 +43,7 @@ public abstract class DatabaseManager extends SQLiteOpenHelper {
         accessMap.put(tableAccess.getTableName(), tableAccess);
     }
 
+    @SuppressWarnings("unchecked")
     public <M extends Model> DatabaseAccess<M> getTableAccess(String tableName) {
         assert tableName != null;
         assert !tableName.isEmpty();
