@@ -1,5 +1,8 @@
 package free.abdullah.threepio.codegenerator;
 
+import com.sun.codemodel.JCodeModel;
+
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,12 +14,12 @@ import javax.lang.model.element.TypeElement;
 
 public class TProcessor extends AbstractProcessor {
 
-    private TContext context;
+    ProcessingEnvironment environment;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        context = new TContext(processingEnv);
+        this.environment = processingEnv;
     }
 
     @Override
@@ -34,12 +37,17 @@ public class TProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
 
-            context.writeGeneratedClasses();
-            context.resetCodeModel();
         }catch (Exception e) {
-            context.printError(e.getMessage());
             e.printStackTrace();
         }
         return true;
+    }
+
+    private void writeGenerateClass(JCodeModel codeModel) {
+        try {
+            codeModel.build(new TCodeWriter(environment.getFiler()));
+        } catch (IOException e) {
+
+        }
     }
 }

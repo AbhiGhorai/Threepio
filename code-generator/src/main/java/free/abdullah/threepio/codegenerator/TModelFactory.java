@@ -11,14 +11,18 @@ import java.util.Map;
 /**
  * Created by abdulmunaf on 8/8/15.
  */
-public class ModelFactory {
+public class TModelFactory {
 
     private final JCodeModel codeModel;
     private final Map<String, JClass> classes;
 
-    public ModelFactory(JCodeModel codeModel) {
+    public TModelFactory(JCodeModel codeModel) {
         this.codeModel = codeModel;
         this.classes = new HashMap<String, JClass>();
+    }
+
+    public JCodeModel getCodeModel() {
+        return codeModel;
     }
 
     public JClass ref(String fullyQualifiedName) {

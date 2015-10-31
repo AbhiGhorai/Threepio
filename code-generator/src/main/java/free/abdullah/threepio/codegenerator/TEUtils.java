@@ -1,13 +1,8 @@
 package free.abdullah.threepio.codegenerator;
 
-import com.sun.codemodel.JCodeModel;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
@@ -19,83 +14,15 @@ import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.tools.Diagnostic;
 
-/**
- * Created by abdulmunaf on 5/8/15.
- */
-public class TContext {
+class TEUtils {
 
-    private final ProcessingEnvironment environment;
-    final Elements elements;
-    final Types types;
-    final Messager messager;
-    final Filer filer;
+    private final Types types;
+    private final Elements elements;
 
-    JCodeModel codeModel;
-    ModelFactory codeModelFactory;
-
-    public TContext(ProcessingEnvironment environment) {
-        this.environment = environment;
-        this.elements = environment.getElementUtils();
+    public TEUtils(ProcessingEnvironment environment) {
         this.types = environment.getTypeUtils();
-        this.messager = environment.getMessager();
-        this.filer = environment.getFiler();
-
-        resetCodeModel();
-    }
-
-    public Elements getElements() {
-        return elements;
-    }
-
-    public Types getTypes() {
-        return types;
-    }
-
-    public Messager getMessager() {
-        return messager;
-    }
-
-    public Filer getFiler() {
-        return filer;
-    }
-
-    public JCodeModel getCodeModel() {
-        return codeModel;
-    }
-
-    public void resetCodeModel() {
-        codeModel = new JCodeModel();
-        codeModelFactory = new ModelFactory(codeModel);
-    }
-
-    public ModelFactory getCodeModelFactory() {
-        return codeModelFactory;
-    }
-
-    public void printNote(String message) {
-        messager.printMessage(Diagnostic.Kind.NOTE, message);
-    }
-
-    public void printError(String message) {
-        messager.printMessage(Diagnostic.Kind.ERROR, message);
-    }
-
-    public void printError(String message, Element element) {
-        messager.printMessage(Diagnostic.Kind.ERROR, message, element);
-    }
-
-    public void printError(String message, Element element, AnnotationMirror mirror) {
-        messager.printMessage(Diagnostic.Kind.ERROR, message, element, mirror);
-    }
-
-    public void writeGeneratedClasses() {
-        try {
-            codeModel.build(new TCodeWriter(filer));
-        } catch (IOException e) {
-            printError("Error occurred while writing code files. Reason - " + e.getMessage());
-        }
+        this.elements = environment.getElementUtils();
     }
 
     public String getPackageName(Element element) {
