@@ -13,16 +13,20 @@ import java.util.Map;
  */
 public class TModelFactory {
 
-    private final JCodeModel codeModel;
-    private final Map<String, JClass> classes;
+    private JCodeModel codeModel;
+    private Map<String, JClass> classes;
 
-    public TModelFactory(JCodeModel codeModel) {
-        this.codeModel = codeModel;
-        this.classes = new HashMap<String, JClass>();
+    public TModelFactory() {
+        reset();
     }
 
     public JCodeModel getCodeModel() {
         return codeModel;
+    }
+
+    public void reset() {
+        this.codeModel = new JCodeModel();
+        this.classes = new HashMap<String, JClass>();
     }
 
     public JClass ref(String fullyQualifiedName) {

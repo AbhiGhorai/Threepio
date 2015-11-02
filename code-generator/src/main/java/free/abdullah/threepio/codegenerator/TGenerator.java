@@ -10,19 +10,28 @@ import javax.lang.model.element.Element;
  */
 public abstract class TGenerator {
 
-    private final ProcessingEnvironment environment;
-    private final TModelFactory modelFactory;
+    protected final ProcessingEnvironment environment;
+    protected final TModelFactory modelFactory;
 
-    private final TEUtils teUtils;
-    private final TMessager messager;
-    private final JCodeModel codeModel;
+    protected final TEUtils teUtils;
+    protected final TMessager messager;
+    protected final JCodeModel codeModel;
 
-    public TGenerator(ProcessingEnvironment environment, TModelFactory modelFactory) {
+    private final String supportedAnnotation;
+
+    public TGenerator(ProcessingEnvironment environment,
+                      TModelFactory modelFactory,
+                      String supportedAnnotation) {
         this.environment = environment;
         this.modelFactory = modelFactory;
         this.teUtils = new TEUtils(environment);
         this.messager = new TMessager(environment);
         this.codeModel = modelFactory.getCodeModel();
+        this.supportedAnnotation = supportedAnnotation;
+    }
+
+    public String getSupportedAnnotation() {
+        return supportedAnnotation;
     }
 
     public abstract void process(Element element);

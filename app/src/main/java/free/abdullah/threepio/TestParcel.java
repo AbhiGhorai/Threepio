@@ -3,16 +3,54 @@ package free.abdullah.threepio;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by abdullah on 31/10/15.
- */
+import java.util.Map;
+
+import free.abdullah.threepio.parcelmaker.AutoParcel;
+import free.abdullah.threepio.parcelmaker.ParcelField;
+
+@AutoParcel
 public class TestParcel implements Parcelable {
 
-    int code;
-    Integer coder;
+
+    @ParcelField
+    int integer;
+
+    @ParcelField
+    long aLong;
+
+    @ParcelField
+    double aDouble;
+
+    @ParcelField
+    String string;
+
+    @ParcelField
+    NewParcelable parcelable;
+
+    public TestParcel() {
+
+    }
 
     protected TestParcel(Parcel in) {
-        code = in.readInt();
+        integer = in.readInt();
+        aLong = in.readLong();
+        aDouble = in.readDouble();
+        string = in.readString();
+        parcelable = in.readParcelable(NewParcelable.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(integer);
+        dest.writeLong(aLong);
+        dest.writeDouble(aDouble);
+        dest.writeString(string);
+        dest.writeParcelable(parcelable, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<TestParcel> CREATOR = new Creator<TestParcel>() {
@@ -26,14 +64,4 @@ public class TestParcel implements Parcelable {
             return new TestParcel[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(code);
-    }
 }
