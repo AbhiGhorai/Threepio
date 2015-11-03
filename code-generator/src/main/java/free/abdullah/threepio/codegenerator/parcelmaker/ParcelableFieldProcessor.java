@@ -52,7 +52,14 @@ public class ParcelableFieldProcessor extends BaseFieldVisitor {
     }
 
     @Override
+    public Void visitBundle(DeclaredType type, VariableElement element) {
+        return parcelable.addStatements(element, "readBundle", "writeBundle");
+    }
+
+    @Override
     public Void visitIBinder(DeclaredType type, VariableElement element) {
-        return parcelable.addStatements(element, "readStrongBinder", "writeStrongBinder");
+        messager.printError("IBinder is not supported", element);
+        return defaultAction(type, element);
+//        return parcelable.addStatements(element, "readStrongBinder", "writeStrongBinder");
     }
 }

@@ -17,6 +17,7 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
     protected TypeMirror parcelableMirror;
     protected TypeMirror serializableMirror;
     protected TypeMirror binderMirror;
+    protected TypeMirror bundleMirror;
 
     protected final TMessager messager;
     protected final GeneratedParcelable parcelable;
@@ -31,6 +32,7 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
         parcelableMirror = teUtils.getTypeMirror(Const.PARCELABLE);
         serializableMirror = teUtils.getTypeMirror(Const.SERIALIZABLE);
         binderMirror = teUtils.getTypeMirror(Const.IBINDER);
+        bundleMirror = teUtils.getTypeMirror(Const.BUNDLE);
     }
 
     @Override
@@ -45,6 +47,9 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
         else if(teUtils.isSubtype(type, binderMirror)) {
             return visitIBinder(type, element);
         }
+        else if(type.equals(bundleMirror)) {
+            return visitBundle(type, element);
+        }
         return super.visitDeclaredExt(type, element);
     }
 
@@ -57,6 +62,10 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
     }
 
     public Void visitIBinder(DeclaredType type, VariableElement element) {
+        return defaultAction(type, element);
+    }
+
+    public Void visitBundle(DeclaredType type, VariableElement element) {
         return defaultAction(type, element);
     }
 

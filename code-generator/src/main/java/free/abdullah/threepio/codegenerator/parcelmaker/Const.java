@@ -19,4 +19,6 @@ public final class Const {
 
     public static final String SERIALIZABLE = "java.io.Serializable";
 
+    public static final String BUNDLE = "android.os.Bundle";
+
 }

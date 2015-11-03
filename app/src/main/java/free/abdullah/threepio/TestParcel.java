@@ -1,5 +1,8 @@
 package free.abdullah.threepio;
 
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -30,6 +33,15 @@ public class TestParcel implements Parcelable {
     @ParcelField
     NewParcelableExt[] parcelableArray;
 
+    @ParcelField
+    Bitmap bitmap;
+
+    @ParcelField
+    Bundle bundle;
+
+    @ParcelField
+    Bundle[] bundles;
+
     public TestParcel() {
 
     }
@@ -40,6 +52,10 @@ public class TestParcel implements Parcelable {
         aDouble = in.createDoubleArray();
         string = in.createStringArray();
         parcelable = in.readParcelable(NewParcelableExt.class.getClassLoader());
+        parcelableArray = in.createTypedArray(NewParcelableExt.CREATOR);
+        bitmap = in.readParcelable(Bitmap.class.getClassLoader());
+        bundle = in.readBundle();
+        bundles = in.createTypedArray(Bundle.CREATOR);
     }
 
     @Override
@@ -50,6 +66,9 @@ public class TestParcel implements Parcelable {
         dest.writeStringArray(string);
         dest.writeParcelable(parcelable, flags);
         dest.writeTypedArray(parcelableArray, flags);
+        dest.writeParcelable(bitmap, flags);
+        dest.writeBundle(bundle);
+        dest.writeTypedArray(bundles, flags);
     }
 
     @Override
