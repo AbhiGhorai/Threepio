@@ -22,7 +22,7 @@ public class ParcelableGenerator extends TGenerator {
     public void process(Element element) {
 
         if(isValidElement(element)) {
-            GeneratedParcelable gp = new GeneratedParcelable(element, modelFactory);
+            GeneratedParcelable gp = new GeneratedParcelable(element, modelFactory, messager);
             ParcelableFieldProcessor fieldProcessor = new ParcelableFieldProcessor(teUtils, messager, gp);
 
             for(Element field : element.getEnclosedElements()) {

@@ -1,10 +1,5 @@
 package free.abdullah.threepio.codegenerator.parcelmaker;
 
-import com.sun.codemodel.JExpr;
-import com.sun.codemodel.JFieldRef;
-import com.sun.codemodel.JInvocation;
-import com.sun.codemodel.JVar;
-
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.util.TypeKindVisitor7;
@@ -13,17 +8,17 @@ import free.abdullah.threepio.codegenerator.TEUtils;
 import free.abdullah.threepio.codegenerator.TMessager;
 
 /**
- * Created by abdullah on 2/11/15.
+ * Created by abdullah on 3/11/15.
  */
-public class PrimitiveFieldProcessor extends TypeKindVisitor7<Void, VariableElement> {
+public class PrimitiveArrayFieldProcessor extends TypeKindVisitor7<Void, VariableElement> {
 
     private final TEUtils teUtils;
     private final TMessager messager;
     private final GeneratedParcelable parcelable;
 
-    public PrimitiveFieldProcessor(TEUtils teUtils,
-                                   TMessager messager,
-                                   GeneratedParcelable parcelable) {
+    public PrimitiveArrayFieldProcessor(TEUtils teUtils,
+                                        TMessager messager,
+                                        GeneratedParcelable parcelable) {
         this.teUtils = teUtils;
         this.messager = messager;
         this.parcelable = parcelable;
@@ -31,44 +26,36 @@ public class PrimitiveFieldProcessor extends TypeKindVisitor7<Void, VariableElem
 
     @Override
     public Void visitPrimitiveAsBoolean(PrimitiveType t, VariableElement element) {
-        return super.visitPrimitiveAsBoolean(t, element);
+        return parcelable.addStatements(element, "createBooleanArray", "writeBooleanArray");
     }
 
     @Override
     public Void visitPrimitiveAsByte(PrimitiveType t, VariableElement element) {
-        return parcelable.addStatements(element, "readByte", "writeByte");
-    }
-
-    @Override
-    public Void visitPrimitiveAsShort(PrimitiveType t, VariableElement element) {
-        messager.printError("Short type is not supported", element);
-        return null;
+        return parcelable.addStatements(element, "createByteArray", "writeByteArray");
     }
 
     @Override
     public Void visitPrimitiveAsInt(PrimitiveType t, VariableElement element) {
-        return parcelable.addStatements(element, "readInt", "writeInt");
+        return parcelable.addStatements(element, "createIntArray", "writeIntArray");
     }
 
     @Override
     public Void visitPrimitiveAsLong(PrimitiveType t, VariableElement element) {
-        return parcelable.addStatements(element, "readLong", "writeLong");
+        return parcelable.addStatements(element, "createLongArray", "writeLongArray");
     }
 
     @Override
     public Void visitPrimitiveAsChar(PrimitiveType t, VariableElement element) {
-        messager.printError("Char type is not supported", element);
-        return null;
-
+        return parcelable.addStatements(element, "createCharArray", "writeCharArray");
     }
 
     @Override
     public Void visitPrimitiveAsFloat(PrimitiveType t, VariableElement element) {
-        return parcelable.addStatements(element, "readFloat", "writeFloat");
+        return parcelable.addStatements(element, "createFloatArray", "writeFloatArray");
     }
 
     @Override
     public Void visitPrimitiveAsDouble(PrimitiveType t, VariableElement element) {
-        return parcelable.addStatements(element, "readDouble", "writeDouble");
+        return parcelable.addStatements(element, "createDoubleArray", "writeDoubleArray");
     }
 }

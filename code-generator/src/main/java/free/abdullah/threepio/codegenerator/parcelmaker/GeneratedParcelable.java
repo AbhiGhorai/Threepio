@@ -7,6 +7,7 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JFieldRef;
+import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
@@ -16,8 +17,11 @@ import com.sun.codemodel.JVar;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.ArrayType;
+import javax.lang.model.type.TypeMirror;
 
 import free.abdullah.threepio.codegenerator.TConsts;
+import free.abdullah.threepio.codegenerator.TMessager;
 import free.abdullah.threepio.codegenerator.TModelFactory;
 
 public class GeneratedParcelable {
@@ -25,6 +29,7 @@ public class GeneratedParcelable {
     private final Element baseClass;
     private final TModelFactory factory;
     private final JCodeModel codeModel;
+    private final TMessager messager;
 
     private JDefinedClass parcelable;
     private JBlock writeBlock;
@@ -32,15 +37,17 @@ public class GeneratedParcelable {
     private JVar inVar;
     private JVar destVar;
 
-    public GeneratedParcelable(Element baseClass, TModelFactory factory) {
+    public GeneratedParcelable(Element baseClass, TModelFactory factory, TMessager messager) {
         this.baseClass = baseClass;
         this.factory = factory;
         this.codeModel = factory.getCodeModel();
+        this.messager = messager;
 
         createParcelableClass();
         createConstructor();
         createWriteToParcel();
         createDescribeContent();
+        createCreatorMember();
     }
 
     public JVar getInVar() {
@@ -59,6 +66,7 @@ public class GeneratedParcelable {
         return readBlock;
     }
 
+    // <editor-fold desc="Read Write Methods">
     public Void addStatements(VariableElement fieldElement, String readMethod, String writeMethod) {
         JFieldRef field = JExpr.ref(fieldElement.getSimpleName().toString());
 
@@ -67,13 +75,27 @@ public class GeneratedParcelable {
         return null;
     }
 
-    public void addWriteStatement(JStatement statement) {
-        writeBlock.add(statement);
-    }
+//    public Void addParcelableStatements(VariableElement element) {
+//        return addLoadableStatements(element, "readParcelable", "writeParcelable");
+//    }
+//
+//    public Void addSerializableStatements(VariableElement element) {
+//        return addLoadableStatements(element, "readSerializable", "writeSerializable");
+//    }
 
-    public void addReadStatement(JStatement statement) {
-        readBlock.add(statement);
+    public Void addLoadableStatements(VariableElement element, String readMethod, String writeMethod) {
+        JFieldRef field = JExpr.ref(element.getSimpleName().toString());
+        JFieldRef flags = JExpr.ref("flags");
+
+        writeBlock.invoke(destVar, writeMethod)
+                  .arg(field)
+                  .arg(flags);
+        readBlock.assign(field,
+                JExpr.invoke(inVar, readMethod)
+                     .arg(getClassLoaderExpression(element)));
+        return null;
     }
+    // </editor-fold>
 
     // <editor-fold desc="Private Methods">
     private void createParcelableClass() {
@@ -110,5 +132,41 @@ public class GeneratedParcelable {
 
         writeBlock = wtp.body();
     }
+
+    private void createCreatorMember() {
+        JClass Parcel = factory.ref(Const.PARCEL);
+        JClass Override = factory.ref(TConsts.OVERRIDE);
+
+        JClass creatorInterface = factory.ref(Const.CREATOR);
+        creatorInterface = creatorInterface.narrow(parcelable);
+        JDefinedClass anonymousClass = codeModel.anonymousClass(creatorInterface);
+
+        JMethod createInstanceMethod = anonymousClass.method(JMod.PUBLIC, parcelable, "createFromParcel");
+        JVar json = createInstanceMethod.param(Parcel, "in");
+        createInstanceMethod.annotate(Override);
+        createInstanceMethod.body()._return(JExpr._new(parcelable).arg(json));
+
+        JMethod createArrayMethod = anonymousClass.method(JMod.PUBLIC, parcelable.array(), "newArray");
+        JVar size = createArrayMethod.param(codeModel.INT, "size");
+        createArrayMethod.annotate(Override);
+        createArrayMethod.body()._return(JExpr.newArray(parcelable, size));
+
+        JFieldVar creatorField =
+                parcelable.field(JMod.PUBLIC | JMod.STATIC, anonymousClass, "CREATOR", JExpr._new(anonymousClass));
+
+    }
+
+    private JExpression getClassLoaderExpression(VariableElement element) {
+        TypeMirror type = element.asType();
+        JClass dc = null;
+        if(type instanceof ArrayType) {
+            ArrayType arrayType = (ArrayType) type;
+            dc = factory.ref(arrayType.getComponentType().toString());
+            return dc.staticRef("CREATOR");
+        } else {
+            return JExpr.dotclass(factory.ref(type.toString())).invoke("getClassLoader");
+        }
+    }
+
     // </editor-fold>
 }

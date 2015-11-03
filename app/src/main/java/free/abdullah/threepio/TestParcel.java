@@ -13,39 +13,43 @@ public class TestParcel implements Parcelable {
 
 
     @ParcelField
-    int integer;
+    int[] integer;
 
     @ParcelField
-    long aLong;
+    long[] aLong;
 
     @ParcelField
-    double aDouble;
+    double[] aDouble;
 
     @ParcelField
-    String string;
+    String[] string;
 
     @ParcelField
-    NewParcelable parcelable;
+    NewParcelableExt parcelable;
+
+    @ParcelField
+    NewParcelableExt[] parcelableArray;
 
     public TestParcel() {
 
     }
 
     protected TestParcel(Parcel in) {
-        integer = in.readInt();
-        aLong = in.readLong();
-        aDouble = in.readDouble();
-        string = in.readString();
-        parcelable = in.readParcelable(NewParcelable.class.getClassLoader());
+        integer = in.createIntArray();
+        aLong = in.createLongArray();
+        aDouble = in.createDoubleArray();
+        string = in.createStringArray();
+        parcelable = in.readParcelable(NewParcelableExt.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(integer);
-        dest.writeLong(aLong);
-        dest.writeDouble(aDouble);
-        dest.writeString(string);
+        dest.writeIntArray(integer);
+        dest.writeLongArray(aLong);
+        dest.writeDoubleArray(aDouble);
+        dest.writeStringArray(string);
         dest.writeParcelable(parcelable, flags);
+        dest.writeTypedArray(parcelableArray, flags);
     }
 
     @Override

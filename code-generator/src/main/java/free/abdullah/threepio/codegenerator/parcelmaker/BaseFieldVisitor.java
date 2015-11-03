@@ -7,6 +7,7 @@ import javax.lang.model.type.TypeMirror;
 
 import free.abdullah.threepio.codegenerator.TBaseFieldVisitor;
 import free.abdullah.threepio.codegenerator.TEUtils;
+import free.abdullah.threepio.codegenerator.TMessager;
 
 /**
  * Created by abdullah on 2/11/15.
@@ -17,8 +18,15 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
     protected TypeMirror serializableMirror;
     protected TypeMirror binderMirror;
 
-    public BaseFieldVisitor(TEUtils teUtils) {
+    protected final TMessager messager;
+    protected final GeneratedParcelable parcelable;
+
+    public BaseFieldVisitor(TEUtils teUtils,
+                            TMessager messager,
+                            GeneratedParcelable parcelable) {
         super(teUtils);
+        this.messager = messager;
+        this.parcelable = parcelable;
 
         parcelableMirror = teUtils.getTypeMirror(Const.PARCELABLE);
         serializableMirror = teUtils.getTypeMirror(Const.SERIALIZABLE);
@@ -27,13 +35,14 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
 
     @Override
     public Void visitDeclaredExt(DeclaredType type, VariableElement element) {
-        if(type.equals(parcelableMirror)) {
+        messager.printNote(type.toString());
+        if(teUtils.isSubtype(type, parcelableMirror)) {
             return visitParcelable(type, element);
         }
-        else if(type.equals(serializableMirror)) {
+        else if(teUtils.isSubtype(type, serializableMirror)) {
             return visitSerializable(type, element);
         }
-        else if(type.equals(binderMirror)) {
+        else if(teUtils.isSubtype(type, binderMirror)) {
             return visitIBinder(type, element);
         }
         return super.visitDeclaredExt(type, element);
@@ -49,5 +58,17 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
 
     public Void visitIBinder(DeclaredType type, VariableElement element) {
         return defaultAction(type, element);
+    }
+
+    @Override
+    public Void visitError(ErrorType t, VariableElement element) {
+
+        if(teUtils.isSubtype(t, StringMirror)) {
+            return visitParcelable(t, element);
+        } else {
+            messager.printNote("Error occured " + element.getSimpleName());
+            messager.printNote("Error occured " + t.toString());
+        }
+        return super.visitError(t, element);
     }
 }

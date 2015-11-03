@@ -11,9 +11,12 @@ public final class Const {
 
     public static final String PARCEL = "android.os.Parcel";
 
+    public static final String CREATOR = "android.os.Parcelable.Creator";
+
     public static final String PARCELABLE = "android.os.Parcelable";
 
     public static final String IBINDER = "android.os.IBinder";
 
     public static final String SERIALIZABLE = "java.io.Serializable";
+
 }

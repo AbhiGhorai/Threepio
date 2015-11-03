@@ -29,10 +29,10 @@ public class TBaseFieldVisitor<T> extends SimpleTypeVisitor7<T, VariableElement>
         if(type.equals(StringMirror)) {
             return visitString(type, element);
         }
-        else if(type.equals(ListMirror)) {
+        else if(teUtils.isSubtype(type, ListMirror)) {
             return visitListInternal(type, element);
         }
-        else if(type.equals(MapMirror)) {
+        else if(teUtils.isSubtype(type, MapMirror)) {
             return visitMapInternal(type, element);
         }
         else if(teUtils.isBoxedPrimitiveType(type)) {
