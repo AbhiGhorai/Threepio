@@ -11,6 +11,7 @@ import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JOp;
 import com.sun.codemodel.JStatement;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
@@ -75,13 +76,12 @@ public class GeneratedParcelable {
         return null;
     }
 
-//    public Void addParcelableStatements(VariableElement element) {
-//        return addLoadableStatements(element, "readParcelable", "writeParcelable");
-//    }
-//
-//    public Void addSerializableStatements(VariableElement element) {
-//        return addLoadableStatements(element, "readSerializable", "writeSerializable");
-//    }
+    public Void addBooleanStatements(VariableElement element) {
+        JFieldRef field = JExpr.ref(element.getSimpleName().toString());
+        readBlock.assign(field, JExpr.invoke(inVar, "readInt").eq(JExpr.lit(1)));
+        writeBlock.invoke(destVar, "writeInt").arg(JOp.cond(field, JExpr.lit(1), JExpr.lit(0))) ;
+        return null;
+    }
 
     public Void addLoadableStatements(VariableElement element, String readMethod, String writeMethod) {
         JFieldRef field = JExpr.ref(element.getSimpleName().toString());
@@ -102,6 +102,7 @@ public class GeneratedParcelable {
         String baseFullName = baseClass.asType().toString();
         parcelable = factory.create(baseFullName + "Ext");
         parcelable._extends(factory.ref(baseFullName));
+        parcelable._implements(factory.ref(Const.PARCELABLE));
     }
 
     private void createConstructor() {

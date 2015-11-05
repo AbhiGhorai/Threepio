@@ -31,7 +31,7 @@ public class PrimitiveFieldProcessor extends TypeKindVisitor7<Void, VariableElem
 
     @Override
     public Void visitPrimitiveAsBoolean(PrimitiveType t, VariableElement element) {
-        return super.visitPrimitiveAsBoolean(t, element);
+        return parcelable.addBooleanStatements(element);
     }
 
     @Override
