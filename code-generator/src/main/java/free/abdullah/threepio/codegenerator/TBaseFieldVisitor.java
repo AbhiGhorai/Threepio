@@ -2,6 +2,7 @@ package free.abdullah.threepio.codegenerator;
 
 import java.util.List;
 
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.PrimitiveType;
@@ -29,10 +30,10 @@ public class TBaseFieldVisitor<T> extends SimpleTypeVisitor7<T, VariableElement>
         if(type.equals(StringMirror)) {
             return visitString(type, element);
         }
-        else if(teUtils.isSubtype(type, ListMirror)) {
+        else if(isGenericSubType(type, ListMirror)) {
             return visitListInternal(type, element);
         }
-        else if(teUtils.isSubtype(type, MapMirror)) {
+        else if(isGenericSubType(type, MapMirror)) {
             return visitMapInternal(type, element);
         }
         else if(teUtils.isBoxedPrimitiveType(type)) {
@@ -62,7 +63,7 @@ public class TBaseFieldVisitor<T> extends SimpleTypeVisitor7<T, VariableElement>
     }
 
     // <editor-fold desc="Private Methods" >
-    public T visitListInternal(DeclaredType type, VariableElement element) {
+    private T visitListInternal(DeclaredType type, VariableElement element) {
         TypeMirror paramType = null;
         List<? extends TypeMirror> types =  type.getTypeArguments();
         if(types != null && types.size() > 0) {
@@ -71,7 +72,7 @@ public class TBaseFieldVisitor<T> extends SimpleTypeVisitor7<T, VariableElement>
         return visitList(type, paramType, element);
     }
 
-    public T visitMapInternal(DeclaredType type, VariableElement element) {
+    private T visitMapInternal(DeclaredType type, VariableElement element) {
         TypeMirror keyType = null;
         TypeMirror valueType = null;
         List<? extends TypeMirror> types =  type.getTypeArguments();
@@ -81,5 +82,17 @@ public class TBaseFieldVisitor<T> extends SimpleTypeVisitor7<T, VariableElement>
         }
         return visitMap(type, keyType, valueType, element);
     }
+
+    private boolean isGenericSubType(DeclaredType type, TypeMirror superType) {
+        List<? extends TypeMirror> typeArgs = type.getTypeArguments();
+        TypeMirror[] mirrors = new TypeMirror[typeArgs.size()];
+        typeArgs.toArray(mirrors);
+
+        TypeElement listElement = (TypeElement) teUtils.getTypes().asElement(superType);
+        TypeMirror listType = teUtils.getTypes().getDeclaredType(listElement, mirrors);
+
+        return teUtils.isSubtype(type, listType);
+    }
+
     // </editor-fold>
 }

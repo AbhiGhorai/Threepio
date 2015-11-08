@@ -25,6 +25,14 @@ public class TEUtils {
         this.elements = environment.getElementUtils();
     }
 
+    public Types getTypes() {
+        return types;
+    }
+
+    public Elements getElements() {
+        return elements;
+    }
+
     public String getPackageName(Element element) {
         return elements.getPackageOf(element).toString();
     }
@@ -45,6 +53,13 @@ public class TEUtils {
         return types.isSubtype(t1, t2);
     }
 
+    public boolean isSameType(TypeMirror t1, TypeMirror t2) {
+        return types.isSameType(t1, t2);
+    }
+
+    public boolean isAssignable(TypeMirror t1, TypeMirror t2) {
+        return types.isAssignable(t1, t2);
+    }
     public boolean hasAnnotation(Element element, TypeElement annotation) {
         return hasAnnotation(element, annotation.asType());
     }

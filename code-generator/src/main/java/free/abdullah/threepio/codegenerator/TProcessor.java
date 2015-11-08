@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -36,6 +37,15 @@ public class TProcessor extends AbstractProcessor {
     @Override
     public SourceVersion getSupportedSourceVersion() {
         return SourceVersion.RELEASE_7;
+    }
+
+    @Override
+    public Set<String> getSupportedOptions() {
+        HashSet<String> options = new HashSet<>();
+        for(TGenerator generator : generators) {
+            options.addAll(generator.getSupportedOptions());
+        }
+        return options;
     }
 
     @Override

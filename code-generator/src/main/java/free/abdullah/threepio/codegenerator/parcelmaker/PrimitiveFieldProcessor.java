@@ -1,10 +1,5 @@
 package free.abdullah.threepio.codegenerator.parcelmaker;
 
-import com.sun.codemodel.JExpr;
-import com.sun.codemodel.JFieldRef;
-import com.sun.codemodel.JInvocation;
-import com.sun.codemodel.JVar;
-
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.util.TypeKindVisitor7;

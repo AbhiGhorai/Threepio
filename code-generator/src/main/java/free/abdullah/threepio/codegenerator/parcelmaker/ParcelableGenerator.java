@@ -1,5 +1,6 @@
 package free.abdullah.threepio.codegenerator.parcelmaker;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -14,21 +15,40 @@ import free.abdullah.threepio.codegenerator.TModelFactory;
 
 public class ParcelableGenerator extends TGenerator {
 
+    private static final String ADD_SUFFIX = "addParcelableSuffix";
+    private static final String REMOVE_SUFFIX = "removeParcelableSuffix";
+
     public ParcelableGenerator(ProcessingEnvironment environment, TModelFactory modelFactory) {
-        super(environment, modelFactory, Const.AUTO_PARCEL);
+        super(environment, modelFactory);
+    }
+
+    @Override
+    public String getSupportedAnnotation() {
+        return Const.AUTO_PARCEL;
+    }
+
+    @Override
+    public Set<String> getSupportedOptions() {
+        HashSet<String> options = new HashSet<>();
+        options.add(ADD_SUFFIX);
+        options.add(REMOVE_SUFFIX);
+        return options;
     }
 
     @Override
     public void process(Element element) {
 
         if(isValidElement(element)) {
-            GeneratedParcelable gp = new GeneratedParcelable(element, modelFactory, messager);
+            GeneratedParcelable gp = new GeneratedParcelable(element, modelFactory, messager, teUtils);
             ParcelableFieldProcessor fieldProcessor = new ParcelableFieldProcessor(teUtils, messager, gp);
 
-            for(Element field : element.getEnclosedElements()) {
-                if(isValidField(field)) {
-                    field.asType().accept(fieldProcessor, (VariableElement) field);
+            if(gp.initialize(getRemoveSuffix(), getAddSuffix())) {
+                for (Element field : element.getEnclosedElements()) {
+                    if (isValidField(field)) {
+                        field.asType().accept(fieldProcessor, (VariableElement) field);
+                    }
                 }
+                gp.finalizeGenerate();
             }
         }
     }
@@ -57,6 +77,14 @@ public class ParcelableGenerator extends TGenerator {
             return false;
         }
         return true;
+    }
+
+    private String getAddSuffix() {
+        return environment.getOptions().get(ADD_SUFFIX);
+    }
+
+    private String getRemoveSuffix() {
+        return environment.getOptions().get(REMOVE_SUFFIX);
     }
     // </editor-fold>
 }

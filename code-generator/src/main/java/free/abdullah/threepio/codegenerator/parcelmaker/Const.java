@@ -9,6 +9,8 @@ public final class Const {
 
     public static final String PARCEL_FIELD = "free.abdullah.threepio.parcelmaker.ParcelField";
 
+    public static final String PARCEL_LISTENER = "free.abdullah.threepio.parcelmaker.ParcelListener";
+
     public static final String PARCEL = "android.os.Parcel";
 
     public static final String CREATOR = "android.os.Parcelable.Creator";

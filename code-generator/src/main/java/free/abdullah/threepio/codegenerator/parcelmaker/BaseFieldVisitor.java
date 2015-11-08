@@ -37,12 +37,11 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
 
     @Override
     public Void visitDeclaredExt(DeclaredType type, VariableElement element) {
-        messager.printNote(type.toString());
         if(teUtils.isSubtype(type, parcelableMirror)) {
             return visitParcelable(type, element);
         }
         else if(teUtils.isSubtype(type, serializableMirror)) {
-            return visitSerializable(type, element);
+            return defaultAction(type, element); // visitSerializable(type, element);
         }
         else if(teUtils.isSubtype(type, binderMirror)) {
             return visitIBinder(type, element);
@@ -71,7 +70,6 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
 
     @Override
     public Void visitError(ErrorType t, VariableElement element) {
-
         if(teUtils.isSubtype(t, StringMirror)) {
             return visitParcelable(t, element);
         } else {
