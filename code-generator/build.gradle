@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
@@ -11,9 +10,9 @@ dependencies {
 
 ext {
     project_version = '1.0.0'
-    artifact_id     = 'parcel-maker'
+    artifact_id     = 'code-generator'
     project_name    = 'Threepio Code Generator'
-    project_desc    = 'Annotation processor and code generator for Threepio groupd of libraries.'
+    project_desc    = 'Annotation processor and code generator for Threepio group of libraries.'
 }
 
 def project_url     = 'https://github.com/abdullah-chhatra/Threepio'
@@ -27,9 +26,8 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 publishing {
     publications {
-        CodeGenrator(MavenPublication) {
+        CodeGenerator(MavenPublication) {
             from components.java
-            artifact jar
             groupId group
             artifactId artifact_id
             version project_version
@@ -42,7 +40,6 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     publications = ['CodeGenerator']
-    configurations = ['archives']
     pkg {
         repo = "maven"
         // it is the name that appears in bintray when logged
@@ -65,4 +62,9 @@ bintray {
 //            }
         }
     }
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
 }
