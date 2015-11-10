@@ -3,10 +3,12 @@ package free.abdullah.threepio.codegenerator;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
+import com.sun.codemodel.JFieldRef;
 import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
+import com.sun.codemodel.JVar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class TGeneratedClass {
         this.teUtils = teUtils;
     }
 
+    // <editor-fold desc="Class methods">
     protected void createClass(String name) {
         generated = factory.create(name);
     }
@@ -63,6 +66,7 @@ public class TGeneratedClass {
     protected void addImplements(String baseInterface) {
         generated._implements(factory.ref(baseInterface));
     }
+    // </editor-fold>
 
     // <editor-fold desc="Constructor Methods">
 
@@ -211,5 +215,9 @@ public class TGeneratedClass {
         }
         return JMod.NONE;
     }
-    // <editor-fold>
+    // </editor-fold>
+
+    protected JFieldRef getField(VariableElement element) {
+        return JExpr.ref(element.getSimpleName().toString());
+    }
 }

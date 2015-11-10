@@ -28,6 +28,8 @@ repositories {
 
 apt {
     arguments {
+        addParcelableSuffix "Ext"
+        addJsonParsableSuffix "Ext"
     }
 }
 
@@ -37,5 +39,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
 
     compile project(':parcel-maker')
+    compile project(':auto-json')
     apt project(':code-generator')
 }

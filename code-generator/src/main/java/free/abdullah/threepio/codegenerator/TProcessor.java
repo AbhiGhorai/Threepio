@@ -16,6 +16,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
+import free.abdullah.threepio.codegenerator.autojson.JsonParsableGenerator;
 import free.abdullah.threepio.codegenerator.parcelmaker.ParcelableGenerator;
 
 public class TProcessor extends AbstractProcessor {
@@ -32,6 +33,7 @@ public class TProcessor extends AbstractProcessor {
         this.modelFactory = new TModelFactory();
 
         generators.add(new ParcelableGenerator(processingEnv, modelFactory));
+        generators.add(new JsonParsableGenerator(processingEnv, modelFactory));
     }
 
     @Override
@@ -41,7 +43,6 @@ public class TProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedOptions() {
-        new TMessager(processingEnv).printNote("get Supported options");
         HashSet<String> options = new HashSet<>();
         for(TGenerator generator : generators) {
             options.addAll(generator.getSupportedOptions());
@@ -51,7 +52,6 @@ public class TProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        new TMessager(processingEnv).printNote("get Supported annotation type");
         HashSet<String> annotations = new HashSet<>();
         for(TGenerator generator : generators) {
             annotations.add(generator.getSupportedAnnotation());
@@ -63,12 +63,14 @@ public class TProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         TEUtils utils = new TEUtils(processingEnv);
         TMessager messager = new TMessager(processingEnv);
-        new TMessager(processingEnv).printNote("Processing something");
+
         try {
             for(TGenerator generator : generators) {
                 TypeElement annotation = utils.getTypeElement(generator.getSupportedAnnotation());
-                for(Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
-                    generator.process(element);
+                if(annotation != null) {
+                    for(Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
+                        generator.process(element);
+                    }
                 }
             }
             writeGenerateClass(modelFactory.getCodeModel());

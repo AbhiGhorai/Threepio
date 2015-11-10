@@ -8,6 +8,10 @@ import com.sun.codemodel.JDefinedClass;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.lang.model.element.ExecutableElement;
+
+import free.abdullah.threepio.codegenerator.autojson.Const;
+
 /**
  * Created by abdulmunaf on 8/8/15.
  */
@@ -36,6 +40,29 @@ public class TModelFactory {
         JClass newClass = codeModel.ref(fullyQualifiedName);
         classes.put(fullyQualifiedName, newClass);
         return newClass;
+    }
+
+    public JClass refExt(String fullyQualifiedName, TMessager messager) {
+        try {
+            if (classes.containsKey(fullyQualifiedName)) {
+                messager.printNote("We found it out");
+                return classes.get(fullyQualifiedName);
+            }
+
+            messager.printNote("We have not found " + fullyQualifiedName);
+            JClass newClass = codeModel.ref(fullyQualifiedName);
+            if(newClass == null) {
+                messager.printNote("Null found");
+            } else {
+                messager.printNote("Not null found");
+            }
+            //classes.put(fullyQualifiedName, newClass);
+            //messager.printNote(newClass.fullName());
+            return newClass;
+        } catch (Exception e) {
+            messager.printNote(e.getMessage());
+            return ref(Const.JSON_PARSABLE);
+        }
     }
 
     public JDefinedClass create(String fullyQualifiedName)  {

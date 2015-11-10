@@ -7,7 +7,6 @@ import android.os.Parcel;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import free.abdullah.threepio.parcelmaker.AutoParcel;
 import free.abdullah.threepio.parcelmaker.ParcelField;
@@ -28,11 +27,11 @@ public class TestParcelBase implements ParcelListener {
     @ParcelField
     String[] string;
 
-    @ParcelField
-    NewParcelable parcelable;
-
-    @ParcelField
-    NewParcelable[] parcelableArray;
+//    @ParcelField
+//    NewParcelable parcelable;
+//
+//    @ParcelField
+//    NewParcelable[] parcelableArray;
 
     @ParcelField
     Bitmap bitmap;
@@ -46,8 +45,8 @@ public class TestParcelBase implements ParcelListener {
     @ParcelField
     boolean aBoolean;
 
-    @ParcelField
-    List<NewParcelable> parcelables;
+//    @ParcelField
+//    List<NewParcelable> parcelables;
 
     @ParcelField
     ArrayList<String> strings;
