@@ -1,13 +1,7 @@
 package free.abdullah.threepio;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.List;
-import java.util.Objects;
-
-import free.abdullah.threepio.parcelmaker.AutoParcel;
-import free.abdullah.threepio.parcelmaker.ParcelField;
+import free.abdullah.threepio.autoparcel.AutoParcel;
+import free.abdullah.threepio.autoparcel.ParcelField;
 
 /**
  * Created by abdullah on 2/11/15.

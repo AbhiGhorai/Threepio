@@ -28,10 +28,9 @@ dependencies {
 
 ext {
     project_version = '1.0.0'
-    artifact_id     = 'parcel-maker'
-    project_name    = 'Threepio Parcel Maker'
+    artifact_id     = 'auto-parcel'
+    project_name    = 'Threepio Auto Parcel'
     project_desc    = 'Automate implementation of Android Parcelable interface.'
 }
 
-apply from: '../scripts/bintrayupload.gra' +
-        'dle'
+apply from: '../scripts/bintrayupload.gradle'

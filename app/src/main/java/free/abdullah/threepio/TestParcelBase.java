@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import free.abdullah.threepio.parcelmaker.AutoParcel;
-import free.abdullah.threepio.parcelmaker.ParcelField;
-import free.abdullah.threepio.parcelmaker.ParcelListener;
+import free.abdullah.threepio.autoparcel.AutoParcel;
+import free.abdullah.threepio.autoparcel.ParcelField;
+import free.abdullah.threepio.autoparcel.ParcelListener;
 
 @AutoParcel
 public class TestParcelBase implements ParcelListener {

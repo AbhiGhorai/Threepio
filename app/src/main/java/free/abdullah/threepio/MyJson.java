@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import free.abdullah.threepio.autojson.AutoJson;
 import free.abdullah.threepio.autojson.JsonField;
 import free.abdullah.threepio.autojson.JsonParseListener;
-import free.abdullah.threepio.parcelmaker.AutoParcel;
-import free.abdullah.threepio.parcelmaker.ParcelField;
+import free.abdullah.threepio.autoparcel.AutoParcel;
+import free.abdullah.threepio.autoparcel.ParcelField;
 
 /**
  * Created by abdullah on 9/11/15.

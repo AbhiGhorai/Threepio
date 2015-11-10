@@ -4,8 +4,8 @@ import java.util.List;
 
 import free.abdullah.threepio.autojson.AutoJson;
 import free.abdullah.threepio.autojson.JsonField;
-import free.abdullah.threepio.parcelmaker.AutoParcel;
-import free.abdullah.threepio.parcelmaker.ParcelField;
+import free.abdullah.threepio.autoparcel.AutoParcel;
+import free.abdullah.threepio.autoparcel.ParcelField;
 
 /**
  * Created by abdullah on 10/11/15.

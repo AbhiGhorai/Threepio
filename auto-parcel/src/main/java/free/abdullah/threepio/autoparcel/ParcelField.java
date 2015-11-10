@@ -1,4 +1,4 @@
-package free.abdullah.threepio.parcelmaker;
+package free.abdullah.threepio.autoparcel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
