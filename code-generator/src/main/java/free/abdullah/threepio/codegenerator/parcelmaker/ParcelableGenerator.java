@@ -64,16 +64,17 @@ public class ParcelableGenerator extends TGenerator {
     }
 
     private boolean isValidField(Element fieldElement) {
-        TypeElement parcelField = teUtils.getTypeElement(Const.PARCEL_FIELD);
-        if(!teUtils.hasAnnotation(fieldElement, parcelField)) {
+        if(fieldElement.getKind() != ElementKind.FIELD) {
+            return false;
+        }
+
+        TypeElement parcelIgnore = teUtils.getTypeElement(Const.PARCEL_IGNORE);
+        if(teUtils.hasAnnotation(fieldElement, parcelIgnore)) {
             return false;
         }
 
         Set<Modifier> modifiers = fieldElement.getModifiers();
-        if(modifiers.contains(Modifier.FINAL) ||
-                modifiers.contains(Modifier.PRIVATE) ||
-                modifiers.contains(Modifier.STATIC)) {
-            messager.printError("JsonField can not be applied to private, final and static fields", fieldElement);
+        if(modifiers.contains(Modifier.FINAL) || modifiers.contains(Modifier.PRIVATE) || modifiers.contains(Modifier.STATIC)) {
             return false;
         }
         return true;

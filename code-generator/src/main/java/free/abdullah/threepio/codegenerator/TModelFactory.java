@@ -8,8 +8,6 @@ import com.sun.codemodel.JDefinedClass;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.lang.model.element.ExecutableElement;
-
 import free.abdullah.threepio.codegenerator.autojson.Const;
 
 /**

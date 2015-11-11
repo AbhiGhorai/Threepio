@@ -1,13 +1,10 @@
 package free.abdullah.threepio.autojson;
 
-import android.os.Parcelable;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by abdullah on 10/11/15.

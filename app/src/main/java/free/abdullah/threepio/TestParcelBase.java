@@ -9,22 +9,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import free.abdullah.threepio.autoparcel.AutoParcel;
-import free.abdullah.threepio.autoparcel.ParcelField;
 import free.abdullah.threepio.autoparcel.ParcelListener;
 
 @AutoParcel
 public class TestParcelBase implements ParcelListener {
 
-    @ParcelField
     int[] integer;
 
-    @ParcelField
     long[] aLong;
 
-    @ParcelField
     double[] aDouble;
 
-    @ParcelField
     String[] string;
 
 //    @ParcelField
@@ -33,22 +28,17 @@ public class TestParcelBase implements ParcelListener {
 //    @ParcelField
 //    NewParcelable[] parcelableArray;
 
-    @ParcelField
     Bitmap bitmap;
 
-    @ParcelField
     Bundle bundle;
 
-    @ParcelField
     Bundle[] bundles;
 
-    @ParcelField
     boolean aBoolean;
 
 //    @ParcelField
 //    List<NewParcelable> parcelables;
 
-    @ParcelField
     ArrayList<String> strings;
 
     public TestParcelBase() {

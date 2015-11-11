@@ -3,12 +3,8 @@ package free.abdullah.threepio.codegenerator.autojson;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 
-import java.util.Locale;
-import java.util.Map;
-
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;

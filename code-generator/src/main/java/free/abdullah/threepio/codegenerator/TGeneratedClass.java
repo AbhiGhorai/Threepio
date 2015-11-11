@@ -8,7 +8,6 @@ import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
-import com.sun.codemodel.JVar;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package free.abdullah.threepio.codegenerator.autojson;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -31,7 +32,10 @@ public class JsonParsableGenerator extends TGenerator {
 
     @Override
     public Set<String> getSupportedOptions() {
-        return super.getSupportedOptions();
+        HashSet<String> options = new HashSet<>();
+        options.add(ADD_SUFFIX);
+        options.add(REMOVE_SUFFIX);
+        return options;
     }
 
     @Override

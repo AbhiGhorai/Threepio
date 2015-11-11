@@ -6,10 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by abdullah on 31/10/15.
+ * Created by abdullah on 10/11/15.
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.FIELD)
-public @interface ParcelField {
-
+public @interface ParcelIgnore {
 }

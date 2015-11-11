@@ -7,9 +7,9 @@ public final class Const {
 
     public static final String AUTO_PARCEL = "free.abdullah.threepio.autoparcel.AutoParcel";
 
-    public static final String PARCEL_FIELD = "free.abdullah.threepio.autoparcel.ParcelField";
-
     public static final String PARCEL_LISTENER = "free.abdullah.threepio.autoparcel.ParcelListener";
+
+    public static final String PARCEL_IGNORE = "free.abdullah.threepio.autoparcel.ParcelIgnore";
 
     public static final String PARCEL = "android.os.Parcel";
 

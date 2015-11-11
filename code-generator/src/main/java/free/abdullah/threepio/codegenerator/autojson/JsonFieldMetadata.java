@@ -1,6 +1,5 @@
 package free.abdullah.threepio.codegenerator.autojson;
 
-import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 
 /**

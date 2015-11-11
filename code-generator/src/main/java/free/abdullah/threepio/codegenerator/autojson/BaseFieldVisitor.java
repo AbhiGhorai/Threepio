@@ -34,6 +34,7 @@ public class BaseFieldVisitor extends TBaseFieldVisitor<Void> {
         if(teUtils.isSubtype(type, parsableMirror)) {
             return visitJsonParsable(type, element);
         }
+        messager.printError(type.toString() + " is not supported", element);
         return super.visitDeclaredExt(type, element);
     }
 
