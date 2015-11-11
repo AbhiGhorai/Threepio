@@ -3,11 +3,14 @@ package free.abdullah.threepio;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import free.abdullah.threepio.inject.activity.TActivity;
+
+@TActivity(layout = R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
     }
 }

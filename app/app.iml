@@ -94,7 +94,7 @@
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
-    <orderEntry type="module" module-name="auto-parcel" exported="" />
-    <orderEntry type="module" module-name="auto-json" exported="" />
+    <orderEntry type="library" exported="" name="guava-18.0" level="project" />
+    <orderEntry type="module" module-name="inject" exported="" />
   </component>
 </module>

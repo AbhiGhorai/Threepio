@@ -53,6 +53,18 @@ public class TEUtils {
         return types.isSubtype(t1, t2);
     }
 
+    public boolean isSubtype(TypeMirror t1, String t2) {
+        return isSubtype(t1, getTypeMirror(t2));
+    }
+
+    public boolean isSubtype(String t1, TypeMirror t2) {
+        return isSubtype(getTypeMirror(t1), t2);
+    }
+
+    public boolean isSubtype(String t1, String t2) {
+        return isSubtype(getTypeMirror(t1), getTypeMirror(t2));
+    }
+
     public boolean isSameType(TypeMirror t1, TypeMirror t2) {
         return types.isSameType(t1, t2);
     }

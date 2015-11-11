@@ -16,6 +16,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import free.abdullah.threepio.codegenerator.autojson.JsonParsableGenerator;
+import free.abdullah.threepio.codegenerator.inject.activity.ActivityGenerator;
 import free.abdullah.threepio.codegenerator.parcelmaker.ParcelableGenerator;
 
 public class TProcessor extends AbstractProcessor {
