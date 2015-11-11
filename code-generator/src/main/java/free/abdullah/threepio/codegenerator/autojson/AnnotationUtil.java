@@ -25,9 +25,11 @@ public class AnnotationUtil {
 
     private final TEUtils teUtils;
     private final TypeMirror fieldAnnotation;
+    private final Options options;
 
-    public AnnotationUtil(TEUtils teUtils) {
+    public AnnotationUtil(TEUtils teUtils, Options options) {
         this.teUtils = teUtils;
+        this.options = options;
         this.fieldAnnotation = teUtils.getTypeMirror(Const.JSON_FIELD);
     }
 
@@ -40,7 +42,12 @@ public class AnnotationUtil {
             if(av != null) {
                 metadata.key = (String) av.getValue();
             } else {
-                metadata.key = field.getSimpleName().toString();
+                String varName = field.getSimpleName().toString();
+                messager.printNote(varName);
+//                messager.printNote(options.getKeyCase().toString());
+//                messager.printNote(options.getVarCase().toString());
+                metadata.key = options.getVarCase().convert(varName, options.getKeyCase());
+//                messager.printNote(metadata.key);
             }
 
             av = teUtils.getAnnotationValue(field, fieldAnnotation, OPTIONAL);

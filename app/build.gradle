@@ -30,6 +30,9 @@ apt {
     arguments {
         addParcelableSuffix "Ext"
         addJsonParsableSuffix "Ext"
+
+        jsonParsableKeyCase "upper_snake"
+        varCase "lower_camel"
     }
 }
 

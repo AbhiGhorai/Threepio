@@ -47,12 +47,18 @@ public class GeneratedJsonParsable extends TGeneratedClass {
     JClass jsonException = factory.ref(Const.JSON_EXCEPTION);
 
     private final AnnotationUtil aUtil;
+    private final Options options;
 
     protected GeneratedJsonParsable(Element baseClass, TModelFactory factory,
-                                    TMessager messager, TEUtils teUtils) {
+                                    TMessager messager, TEUtils teUtils,
+                                    Options options) {
         super(factory, messager, teUtils);
         this.baseClass = baseClass;
-        this.aUtil = new AnnotationUtil(teUtils);
+        this.aUtil = new AnnotationUtil(teUtils, options);
+        this.options = options;
+
+        messager.printNote(options.getKeyCase().toString());
+        messager.printNote(options.getVarCase().toString());
     }
 
     public Void addPrimitive(VariableElement element, String getMethod, String optMethod) {
@@ -158,8 +164,8 @@ public class GeneratedJsonParsable extends TGeneratedClass {
     }
 
     // <editor-fold desc="Initialize Methods">
-    public boolean initialize(String removeSuffix, String addSuffix) {
-        String className = getClassName(removeSuffix, addSuffix);
+    public boolean initialize() {
+        String className = getClassName(options.getRemoveSuffix(), options.getAddSuffix());
         if(className != null) {
             createJsonClass(className);
             createConstructors();

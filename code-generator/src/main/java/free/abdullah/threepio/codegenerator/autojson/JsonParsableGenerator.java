@@ -18,8 +18,6 @@ import free.abdullah.threepio.codegenerator.TModelFactory;
  */
 public class JsonParsableGenerator extends TGenerator {
 
-    private static final String ADD_SUFFIX = "addJsonParsableSuffix";
-    private static final String REMOVE_SUFFIX = "removeJsonParsableSuffix";
 
     public JsonParsableGenerator(ProcessingEnvironment environment, TModelFactory modelFactory) {
         super(environment, modelFactory);
@@ -33,17 +31,24 @@ public class JsonParsableGenerator extends TGenerator {
     @Override
     public Set<String> getSupportedOptions() {
         HashSet<String> options = new HashSet<>();
-        options.add(ADD_SUFFIX);
-        options.add(REMOVE_SUFFIX);
+        options.add(Options.ADD_SUFFIX);
+        options.add(Options.REMOVE_SUFFIX);
+        options.add(Options.KEY_CASE);
+        options.add(Options.VAR_CASE);
         return options;
     }
 
     @Override
     public void process(Element element) {
         if(isValidElement(element)) {
-            GeneratedJsonParsable gp = new GeneratedJsonParsable(element, modelFactory, messager, teUtils);
+            GeneratedJsonParsable gp = new GeneratedJsonParsable(element,
+                    modelFactory,
+                    messager,
+                    teUtils,
+                    new Options(environment.getOptions()));
+
             JsonFieldProcessor processor = new JsonFieldProcessor(teUtils, messager, gp);
-            if(gp.initialize(getRemoveSuffix(), getAddSuffix())) {
+            if(gp.initialize()) {
                 for (Element field : element.getEnclosedElements()) {
                     if (isValidField(field)) {
                         field.asType().accept(processor, (VariableElement) field);
@@ -76,13 +81,5 @@ public class JsonParsableGenerator extends TGenerator {
             messager.printError("JsonField can not be applied to private, final and static fields", fieldElement);
         }
         return true;
-    }
-
-    private String getAddSuffix() {
-        return environment.getOptions().get(ADD_SUFFIX);
-    }
-
-    private String getRemoveSuffix() {
-        return environment.getOptions().get(REMOVE_SUFFIX);
     }
 }
