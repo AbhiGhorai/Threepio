@@ -28,11 +28,6 @@ repositories {
 
 apt {
     arguments {
-        addParcelableSuffix "Ext"
-        addJsonParsableSuffix "Ext"
-
-        jsonParsableKeyCase "upper_snake"
-        varCase "lower_camel"
     }
 }
 
@@ -40,7 +35,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.0'
-
-    compile project(':inject')
-    apt project(':code-generator')
 }

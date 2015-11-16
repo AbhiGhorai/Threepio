@@ -43,13 +43,8 @@ public class AnnotationUtil {
                 metadata.key = (String) av.getValue();
             } else {
                 String varName = field.getSimpleName().toString();
-                messager.printNote(varName);
-//                messager.printNote(options.getKeyCase().toString());
-//                messager.printNote(options.getVarCase().toString());
                 metadata.key = options.getVarCase().convert(varName, options.getKeyCase());
-//                messager.printNote(metadata.key);
             }
-
             av = teUtils.getAnnotationValue(field, fieldAnnotation, OPTIONAL);
             if(av != null) {
                 metadata.optional = (boolean) av.getValue();

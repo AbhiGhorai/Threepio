@@ -7,7 +7,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by abdullah on 10/11/15.
+ * Utility class to read non primitive data types including arrays, lists and JSON Parsables.
+ *
+ * You may not need to use this class directly, but if you want to do so to make your life easier
+ * go ahead and use it.
  */
 public class JsonReader {
 

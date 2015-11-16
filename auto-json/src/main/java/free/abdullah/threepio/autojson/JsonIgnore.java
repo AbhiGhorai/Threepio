@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a class being JSON Parsable.
+ * Marks a field not to be included int the JSON Object.
  */
 @Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.TYPE)
-public @interface AutoJson {
+@Target(ElementType.FIELD)
+public @interface JsonIgnore {
 }

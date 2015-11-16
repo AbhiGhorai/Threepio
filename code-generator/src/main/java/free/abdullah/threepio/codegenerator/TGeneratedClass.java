@@ -10,6 +10,7 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * Created by abdullah on 7/11/15.
@@ -132,6 +134,18 @@ public class TGeneratedClass {
     }
 
     /**
+     * Returns a constructor with specified parameters if it exists.
+     *
+     * @param   paramTypes
+     *          List of parameters types.
+     *
+     * @return  Returns a constructor with specified parameters if it exists, null otherwise.
+     */
+    protected JMethod getConstructor(String... paramTypes) {
+        return getConstructor(Arrays.asList(paramTypes));
+    }
+
+    /**
      * Returns a generated constructor corresponding to the executable element passed to it.
      *
      * @param   constructor
@@ -199,6 +213,18 @@ public class TGeneratedClass {
      * @return  True if exists, false otherwise.
      */
     protected boolean hasConstructor(List<String> paramTypes) {
+        return getConstructor(paramTypes) != null;
+    }
+
+    /**
+     * Checks if a constructor with specified parameter types exists.
+     *
+     * @param   paramTypes
+     *          Constructor parameter types.
+     *
+     * @return  True if exists, false otherwise.
+     */
+    protected boolean hasConstructor(String... paramTypes) {
         return getConstructor(paramTypes) != null;
     }
 

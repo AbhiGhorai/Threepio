@@ -12,6 +12,7 @@ import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JTryBlock;
+import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
 import javax.lang.model.element.Element;
@@ -207,6 +208,8 @@ public class GeneratedJsonParsable extends TGeneratedClass {
     private void createToJson() {
         toJson = generated.method(JMod.PUBLIC, jsonObject, "toJson");
         toJson._throws(jsonException);
+        toJson.annotate(Override.class);
+
         outBlock = createTryBlock(toJson);
         out = outBlock.decl(jsonObject, "out", JExpr._new(jsonObject));
 

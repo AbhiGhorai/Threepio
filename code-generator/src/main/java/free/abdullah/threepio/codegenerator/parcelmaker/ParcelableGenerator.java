@@ -74,7 +74,10 @@ public class ParcelableGenerator extends TGenerator {
         }
 
         Set<Modifier> modifiers = fieldElement.getModifiers();
-        if(modifiers.contains(Modifier.FINAL) || modifiers.contains(Modifier.PRIVATE) || modifiers.contains(Modifier.STATIC)) {
+        if(modifiers.contains(Modifier.FINAL) ||
+                modifiers.contains(Modifier.PRIVATE) ||
+                modifiers.contains(Modifier.STATIC) ||
+                modifiers.contains(Modifier.TRANSIENT)) {
             return false;
         }
         return true;
